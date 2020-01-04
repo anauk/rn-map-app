@@ -1,12 +1,30 @@
 import React from 'react'
 
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, ScrollView, Image} from 'react-native'
+import MapPreview from "../components/MapPreview";
+import {useSelector} from 'react-redux'
+import Color from '../constants/Colors'
 
 const PlaceDetailScreen = props => {
+  const placeId = props.navigation.getParam('placeId')
+  const selectedPlace = useSelector(state => state.places.places.find(
+    place => place.id === placeId
+  ))
   return (
-    < View>
-      <Text> PlacesListScreen</Text>
-    </View>
+    <ScrollView contentContainerStyle={{alignItems: 'center'}}>
+      <Image
+        source={{uri: selectedPlace.imageUri}}
+        style={styles.image}
+      />
+      <View style={styles.locationContainer}>
+        <View style={styles.addressContainer}>
+          <Text style={styles.address}>{selectedPlace.address}</Text>
+        </View>
+        <MapPreview
+          style={styles.mapPreview}
+          location={{lat: selectedPlace.lat, lng: selectedPlace.lng}}/>
+      </View>
+    </ScrollView>
   )
 }
 PlaceDetailScreen.navigationOptions = navData => {
@@ -14,5 +32,40 @@ PlaceDetailScreen.navigationOptions = navData => {
     headerTitle: navData.navigation.getParam('placeTitle')
   }
 }
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  image: {
+    width: '100%',
+    height: '35%',
+    minHeight: 300,
+    backgroundColor: '#ccc'
+  },
+  locationContainer: {
+    marginVertical: 20,
+    width: '90%',
+    maxWidth: 350,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowRadius: 8,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.26,
+    elevation: 5,
+    backgroundColor: 'white',
+    borderRadius: 10
+  },
+  addressContainer: {
+    padding: 20
+  },
+  address: {
+    color: Color.primary,
+    textAlign: 'center'
+  },
+  mapPreview: {
+    width: '100%',
+    maxWidth: 350,
+    height: 300,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10
+  }
+})
 export default PlaceDetailScreen
