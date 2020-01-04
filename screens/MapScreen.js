@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native'
 import MapView, {Marker} from 'react-native-maps'
-import {Platform} from "react-native-web";
 import Colors from "../constants/Colors";
 
 const MapScreen = props => {
