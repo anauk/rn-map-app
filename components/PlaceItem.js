@@ -8,7 +8,7 @@ const PlaceItem = props => {
       style={styles.placeItem}
       onPress={props.onSelect}
     >
-      <Image style={styles.image} soutce={{uri: props.image}}/>
+      <Image style={styles.image} source={{uri: props.image}}/>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.address}>{props.address}</Text>

@@ -35,7 +35,7 @@ export const insertPlace = (title, imageUri, address, lat, lng) => {
   return promise
 }
 
-export const fetchData = (title, imageUri, address, lat, lng) => {
+export const fetchData = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
