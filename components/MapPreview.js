@@ -1,7 +1,8 @@
 import React from 'react'
 
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native'
+import {ActivityIndicator, Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 import ENV from '../env'
+
 import Colors from "../constants/Colors";
 
 const MapPreview = props => {
@@ -19,9 +20,9 @@ const MapPreview = props => {
   }
 
   return (
-    <View style={{...styles.mapPreview, ...props.style}}>
+    <TouchableOpacity onPress={props.onPress} style={{...styles.mapPreview, ...props.style}}>
       {props.location ? (<Image style={styles.mapImage} source={{uri: imagePreviewUrl}}/>) : (props.children)}
-    </View>
+    </TouchableOpacity>
   )
 }
 

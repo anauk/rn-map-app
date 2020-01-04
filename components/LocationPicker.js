@@ -8,9 +8,9 @@ import MapPreview from "./MapPreview";
 const LocationPicker = props => {
   const [isFetching, setIsFetching] = useState(false)
   const [pickedLocation, setPickedLocation] = useState()
-  const verifyPermissions = async() => {
+  const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION)
-    if(result.status !== 'granted'){
+    if (result.status !== 'granted') {
       Alert.alert('Bhbhb', 'You need location', [{text: 'Okay'}])
       return false
     }
@@ -19,7 +19,7 @@ const LocationPicker = props => {
 
   const getLocationHandler = async () => {
     const hasPermission = await verifyPermissions()
-    if(!hasPermission) {
+    if (!hasPermission) {
       return
     }
     try {
@@ -39,16 +39,27 @@ const LocationPicker = props => {
     }
     setIsFetching(false)
   }
+  const pickOnMapHandler = () => {
+    props.navigation.navigate('Map')
+  }
+
   return (
     <View style={styles.locationPicker}>
-<MapPreview style={styles.mapPreview} location={pickedLocation}>
-  {isFetching ? <ActivityIndicator size='large' color={Colors.primary}/> : <Text>No Location chosen yet!</Text>}
-</MapPreview>
-      <Button
-        title='Get User Location'
-        color={Colors.primary}
-        onPress={getLocationHandler}
-      />
+      <MapPreview style={styles.mapPreview} location={pickedLocation} onPress={pickOnMapHandler}>
+        {isFetching ? <ActivityIndicator size='large' color={Colors.primary}/> : <Text>No Location chosen yet!</Text>}
+      </MapPreview>
+      <View style={styles.actions}>
+        <Button
+          title='Get User Location'
+          color={Colors.primary}
+          onPress={getLocationHandler}
+        />
+        <Button
+          title='Pick on Map'
+          color={Colors.primary}
+          onPress={pickOnMapHandler}
+        />
+      </View>
     </View>
   )
 }
@@ -63,6 +74,11 @@ const styles = StyleSheet.create({
     height: 150,
     borderColor: '#ccc',
     borderWidth: 1,
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%'
   }
 })
 export default LocationPicker
